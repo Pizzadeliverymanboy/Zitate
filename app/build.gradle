@@ -1,0 +1,110 @@
+/*
+ * Als erste Anweisung in der Build Configuration wird das
+ * Android plugin for Gradle angewandt.
+ * Dadurch wird der "android" Block verfügbar, durch den
+ * spezielle Android-Build-Options verfügbar werden.
+ */
+
+plugins {
+    id 'com.android.application'
+}
+
+/*
+ * Im "android"-Block werden alle Android-spezifischen
+ * Build Options eingestellt.
+ */
+
+android {
+
+    /*
+     * compileSdkVersion gibt den Android API Level vor, den Gradle zum Kompilieren
+     * der App verwenden soll. Somit kann die App die API Funktionen des angegebenen
+     * API Levels und denen darunter nutzen.
+     *
+     * buildToolsVersion gibt an, welche Version der SDK Build Tools, der Kommandozeilen-
+     * Werkzeuge und des Compiler von Gradle zum Erstellen der App verwenden soll. Die
+     * angegebenen Build Tools müssen mit dem SDK Manager geladen werden, falls notwendig.
+     */
+
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    /*
+     * Der "defaultConfig"-Block umschließt die allgemeinen Einstellungen für alle
+     * Build Varianten. Durch ihn können einige Attribute der main/AndroidManifest.xml
+     * dynamisch vom Build System überschrieben werden.
+     */
+
+    defaultConfig {
+
+        /*
+         * Die applicationId ist die eindeutige Kennung des Packages beim Veröffentlichen.
+         * Die ID kann frei gewählt werden. Jedoch muss im Quellcode weiterhin auf den
+         * Package-Namen referenziert werden, der mit dem package-Attribut in der
+         * AndroidManifest.xml Datei definiert wurde.
+         */
+
+        applicationId "de.codeyourapp.zitate"
+
+
+        // Gibt den Minimum API Level an, der zum Ausführen der App benötigt wird.
+        minSdkVersion 17
+
+        // Gibt den API Level an, der zum Testen der App verwendet wird.
+        targetSdkVersion 30
+
+        // Gibt die Versionsnummer der Anwendung an.
+        versionCode 1
+
+        // Definiert einen benutzerfreundlichen Versionsnamen für die App.
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    /*
+     * Mit dem "buildTypes"-Block werden multiple Build Types konfiguriert.
+     * Standardmäßig werden die beiden Build Types debug und release definiert.
+     * Der debug Build Type wird nicht explizit angezeigt.
+     * Der release Build Type nutzt die Proguard Einstellungen als Optimierung.
+     */
+
+    buildTypes {
+
+        /*
+         * Standardmäßig aktiviert Android Studio für den release Build Type Code
+         * Shrinking (Code-Reduzierung) und gibt die Proguard Settings Datei vor.
+         */
+
+        release {
+            minifyEnabled false // Deaktiviert Code Shrinking für den release Build Type.
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    /*
+     * Mit dem "compileOptions"-Block werden diverse Kompilieroptionen vorgegeben.
+     * In diesem Beispiel wird die zu verwendende Java Version festgelegt.
+     */
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+/*
+ * Der "dependencies"-Block in der Build Configuration Datei auf Modulebene
+ * gibt nur die Dependencies vor, die für das Modul selbst benötigt werden.
+ * Dependencies sind Bibliotheken, die von der eigenen App verwendet und
+ * für das Ausführen der App benötigt werden.
+ */
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
